@@ -1,12 +1,16 @@
 
-
 from django.conf import settings
-from django.http import HttpResponse
-from django.http import HttpResponseNotFound
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template import loader
+from django.urls import reverse
 
-from .models import Post, Comment
+from .models import Post
+
+User = get_user_model()
+
+# from .models import Post
 
 
 def post_list(request):
@@ -21,17 +25,17 @@ def post_list(request):
     return render(request, 'post/post_list.html', context)
 
 
+
 def post_detail(request, post_pk):
     try:
         post = Post.objects.get(pk=post_pk)
-    except Post.DoexNotExist as e:
-        # return HttpResponseNotFound('Post not found, detail : {}.'.format(e))
-
-        return redirect('post:post_list')
+    except Post.DoesNotExist as e:
+        url = reverse('post:post_list')
+        return HttpResponseRedirect(url)
 
     template = loader.get_template('post/post_detail.html')
     context = {
-        'post' : post
+        'post': post,
     }
     rendered_string = template.render(context=context, request=request)
     return HttpResponse(rendered_string)
@@ -39,14 +43,21 @@ def post_detail(request, post_pk):
 def post_create(request):
     # POST요청을 받아 Post객체를 생성 후 post_list페이지로 redirect
     if request.method == 'POST':
-        data = request.POST
-        user = settings.AUTH_USER_MODEL.objects.first()
-        content = data['text']
+        user = User.objects.first()
         post = Post.objects.create(
             author=user,
-            content=content,
+            photo=request.FILES['file'],
         )
-        return redirect('post/post_list.html', pk=post.pk)
+        comment_string = request.POST.get('comment', '')
+        if comment_string:
+            post.comment_set.create(
+                author=user,
+                content=comment_string,
+            )
+
+        return redirect('post:post_detail', post_pk=post.pk)
+    else:
+        return render(request, 'post/post_create.html')
 
 
 def post_modify(request, post_pk):
@@ -86,3 +97,6 @@ def comment_delete(request, post_pk, comment_pk):
     if request.method == 'POST':
         post.delete()
         return redirect('post/post_list.html')
+
+def post_anyway(request):
+    return HttpResponse('anyway')
