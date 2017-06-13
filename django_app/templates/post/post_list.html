@@ -3,9 +3,13 @@
 {% block content %}
 {% for post in posts %}
 <div>
-    <span>{{ post.id }}</span>
-    <span>{{ post.photo.url }}</span>
+    <div>{{ post.author }}</div>
+    <!--<div>{{ post.photo.url }}</div>-->
     <img src="{{ post.photo.url }}" alt="">
+    <div>좋아요 {{ post.like_count }}명</div>
+    <div>{{ post.author }}</div>
+    <div>{{ post.comment }}</div>
+    <br>
 </div>
 {% endfor %}
 {% endblock %}}
