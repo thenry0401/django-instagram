@@ -1,5 +1,11 @@
-from django.shortcuts import render
-from .models import Post
+
+
+from django.conf import settings
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.template import loader
+
+from .models import Post, Comment
 
 
 def post_list(request):
@@ -15,13 +21,25 @@ def post_list(request):
 
 
 def post_detail(request, post_pk):
-    # post_pk에 해당하는 Post객체를 리턴, 보여줌
-    pass
-
+    post = Post.objects.get(pk=post_pk)
+    template = loader.get_template('post/post_detail.html')
+    context = {
+        'post' : post
+    }
+    rendered_string = template.render(context=context, request=request)
+    return HttpResponse(rendered_string)
 
 def post_create(request):
     # POST요청을 받아 Post객체를 생성 후 post_list페이지로 redirect
-    pass
+    if request.method == 'POST':
+        data = request.POST
+        user = settings.AUTH_USER_MODEL.objects.first()
+        content = data['text']
+        post = Post.objects.create(
+            author=user,
+            content=content,
+        )
+        return redirect('post/post_list.html', pk=post.pk)
 
 
 def post_modify(request, post_pk):
@@ -32,12 +50,22 @@ def post_modify(request, post_pk):
 def post_delete(request, post_pk):
     # post_pk에 해당하는 Post에 대한 delete요청만을 받음
     # 처리완료후에는 post_list페이지로 redirect
-    pass
-
+    post = Post.objects.get(pk=post_pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('post/post_list.html')
 
 def comment_create(request, post_pk):
     # POST요청을 받아 Comment객체를 생성 후 post_detail페이지로 redirect
-    pass
+    if request.method == 'POST':
+        data = request.POST
+        user = settings.AUTH_USER_MODEL.objects.first()
+        content = data['text']
+        post = Comment.objects.create(
+            author=user,
+            content=content,
+        )
+        return redirect('post/post_list.html', pk=post_pk)
 
 
 def comment_modify(request, post_pk):
@@ -47,4 +75,7 @@ def comment_modify(request, post_pk):
 
 def comment_delete(request, post_pk, comment_pk):
     # POST요청을 받아 Comment객체를 delete, 이후 post_detail페이지로 redirect
-    pass
+    post = Comment.objects.get(pk=post_pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('post/post_list.html')
