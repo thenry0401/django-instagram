@@ -17,3 +17,4 @@ urlpatterns = [
 
     url(r'^.*/$', views.post_anyway, name='post_anyway'),
 ]
+
