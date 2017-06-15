@@ -2,6 +2,7 @@ from django.contrib.auth import \
     authenticate, \
     login as django_login, \
     logout as django_logout
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -33,3 +34,10 @@ def login(request):
 def logout(request):
     django_logout(request)
     return redirect('post:post_list')
+
+def signup(request):
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'member/signup.html')
+
