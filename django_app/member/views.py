@@ -111,9 +111,9 @@ def signup(request):
         ### Form을 사용한 경우
         form = SignupForm(data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
+            # username = form.cleaned_data['username']
+            # password1 = form.cleaned_data['password1']
+            # password2 = form.cleaned_data['password2']
 
             # if User.objects.filter(username=username).exists():
             #     # 이미 존재하는 username일경우
@@ -129,7 +129,8 @@ def signup(request):
             # )
 
             # 생성한 유저를 로그인 시킴
-            # django_login(request, user)
+            user = form.create_user()
+            django_login(request, user)
             # 이후 post_list뷰로 이동
             return redirect('post:post_list')
     else:
