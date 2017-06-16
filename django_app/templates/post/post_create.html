@@ -4,8 +4,7 @@
 <div>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="file">
-        <input type="text" placeholder="덧글" name="comment">
+        {% include 'include/field_set.html' %}
         <button type="submit">등록</button>
     </form>
 </div>

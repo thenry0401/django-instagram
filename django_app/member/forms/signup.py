@@ -57,3 +57,4 @@ class SignupForm(forms.Form):
             password=password2,
             nickname=nickname,
         )
+

@@ -1,11 +1,13 @@
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.urls import reverse
 
+from .forms import PostForm
 from .models import Post, Comment
 
 User = get_user_model()
@@ -40,24 +42,38 @@ def post_detail(request, post_pk):
     rendered_string = template.render(context=context, request=request)
     return HttpResponse(rendered_string)
 
+@login_required
 def post_create(request):
     # POST요청을 받아 Post객체를 생성 후 post_list페이지로 redirect
     if request.method == 'POST':
-        user = User.objects.first()
-        post = Post.objects.create(
-            author=user,
-            photo=request.FILES['file'],
-        )
-        comment_string = request.POST.get('comment', '')
-        if comment_string:
-            post.comment_set.create(
-                author=user,
-                content=comment_string,
-            )
 
-        return redirect('post:post_detail', post_pk=post.pk)
+        ### PostForm을 사용하지 않았을 때
+        # user = User.objects.first()
+        # post = Post.objects.create(
+        #     author=user,
+        #     photo=request.FILES['photo'],
+        # )
+        # comment_string = request.POST.get('comment', '')
+        # if comment_string:
+        #     post.comment_set.create(
+        #         author=user,
+        #         content=comment_string,
+        #     )
+
+
+        form = PostForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            post=form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('post:post_detail', post_pk=post.pk)
     else:
-        return render(request, 'post/post_create.html')
+        # post/post_create.html을 render해서 리턴
+        form = PostForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'post/post_create.html', context)
 
 
 def post_modify(request, post_pk):
