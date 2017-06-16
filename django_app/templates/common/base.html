@@ -53,7 +53,8 @@
                 <!--<label for="id-login-password">PASSWORD</label>-->
                 <!--<input type="text" id="id-login-password" name="password">-->
                 {{ login_form }}
-                <a href="{% url 'member:login' %}" class="btn">로그인</a>
+                <button type="submit" class="btn">로그인</button>
+                <a href="{% url 'member:signup' %}" class="btn">회원가입</a>
             </form>
             {% endif %}
         </div>
