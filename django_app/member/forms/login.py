@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
         )
     )
     password = forms.CharField(
-        max_length=10,
+        max_length=20,
         widget=forms.PasswordInput(
             attrs={
                 'placeholder': '비밀번호를 입력하세요'

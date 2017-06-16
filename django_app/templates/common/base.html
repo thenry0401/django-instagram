@@ -45,7 +45,16 @@
             <span>{{ user }}로 로그인 중</span>
             <a href="{% url 'member:logout' %}" class="btn">로그아웃</a>
             {% else %}
-            <a href="{% url 'member:login' %}" class="btn">로그인</a>
+            <form action="{% url 'member:login' %}" method="POST" class="form-inline-login">
+                {% csrf_token %}
+                <!--<label for="id-login-username">ID</label>-->
+                <!--<input type="text" id="id-login-username" name="username">-->
+                <!--&nbsp;-->
+                <!--<label for="id-login-password">PASSWORD</label>-->
+                <!--<input type="text" id="id-login-password" name="password">-->
+                {{ login_form }}
+                <a href="{% url 'member:login' %}" class="btn">로그인</a>
+            </form>
             {% endif %}
         </div>
     </nav>

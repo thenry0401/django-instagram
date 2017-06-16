@@ -1,5 +1,4 @@
 header.top-header {
-  padding: 0 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
 }
 
@@ -26,9 +25,9 @@ header.top-header > nav:nth-child(1) .nav-item > a > img {
 }
 
 header.top-header > nav:nth-child(1) .nav-left {
-  width: 182px;
   float: left;
   margin-right: 20px;
+  width: 182px;
 }
 
 header.top-header > nav:nth-child(1) .nav-center {
@@ -62,6 +61,20 @@ header.top-header > nav:nth-child(2) > div {
   margin: 0 auto;
 }
 
+form.form-inline-login {
+  font-size: 11px;
+}
+
+form.form-inline-login label {
+  margin-right: 5px;
+}
+
+form.form-inline-login input {
+  padding: 5px 8px;
+  font-size: 11px;
+  margin-right: 6px;
+}
+
 .container {
   max-width: 1010px;
   margin: 0 auto;
@@ -70,6 +83,10 @@ header.top-header > nav:nth-child(2) > div {
 
 @media screen and (max-width: 700px) {
   .container {
-    padding-top: 0px;
+    padding-top: 0;
   }
+}
+
+.container > .content {
+  padding: 0 10px;
 }
