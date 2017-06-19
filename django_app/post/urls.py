@@ -17,6 +17,8 @@ urlpatterns = [
     url(r'^(?P<post_pk>\d+)/modify/$', views.post_modify, name='post_modify'),
 
     url(r'^(?P<post_pk>\d+)/delete/$', views.post_delete, name='post_delete'),
+    url(r'^(?P<post_pk>\d+)/deletecheck/$', views.post_delete, name='post_delete_check'),
+
 
     url(r'^.*/$', views.post_anyway, name='post_anyway'),
 ]

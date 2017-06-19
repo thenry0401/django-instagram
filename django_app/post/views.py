@@ -142,22 +142,34 @@ def post_modify(request, post_pk):
 def post_delete(request, post_pk):
     # post_pk에 해당하는 Post에 대한 delete요청만을 받음
     # 처리완료후에는 post_list페이지로 redirect
+    post = get_object_or_404(Post, pk=post_pk)
     if request.method == 'POST':
-        post = get_object_or_404(Post, pk=post_pk)
         post.delete()
         return redirect('post:post_list')
+    else:
+        # post_delete시에 확인창 띄워주기
+        template = loader.get_template('post/post_delete_check.html')
+        context = {
+            'post': post,
+        }
+        rendered_string = template.render(context=context, request=request)
+        return HttpResponse(rendered_string)
 
-
+@login_required
 def comment_create(request, post_pk):
     # POST요청을 받아 Comment객체를 생성 후 post_detail페이지로 redirect
+    # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
     pass
 
-
+@post_owner
+@login_required
 def comment_modify(request, post_pk):
     # 수정
+    # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
     pass
 
-
+@post_owner
+@login_required
 def comment_delete(request, post_pk, comment_pk):
     # POST요청을 받아 Comment객체를 delete, 이후 post_detail페이지로 redirect
     pass
