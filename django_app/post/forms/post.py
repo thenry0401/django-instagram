@@ -33,7 +33,7 @@ class PostForm(forms.ModelForm):
         # 전달된 키워드인수중 'author'키 값을 가져오고, 기존 kwargs dict에서 제외
         author = kwargs.pop('author', None)
 
-        if self.instance.pk or isinstance(author, User):
+        if not self.instance.pk or isinstance(author, User):
             self.instance.author = author
 
         # super()의 save()호출
