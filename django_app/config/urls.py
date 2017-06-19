@@ -19,9 +19,18 @@ from django.contrib import admin
 
 from django.conf import settings
 
+from . import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    # 기본 주소를 /post/로 리다이렉트 시키기
+    url(r'^$', views.index, name='index'),
+    # url(r'^$', RedirectView.as_view(pattern_name'post:post_list))
+    # 두번째는 view를 만들지않고 바로 쓸 수 있는 커맨드이다
+
     url(r'^post/', include('post.urls')),
+
     url(r'^member/', include('member.urls')),
 ] + static(
     prefix=settings.MEDIA_URL,
