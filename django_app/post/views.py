@@ -63,9 +63,7 @@ def post_create(request):
 
         form = PostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            post=form.save(commit=False)
-            post.author = request.user
-            post.save()
+            post=form.save(author=request.user)
             return redirect('post:post_detail', post_pk=post.pk)
     else:
         # post/post_create.html을 render해서 리턴

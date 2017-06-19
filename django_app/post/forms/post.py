@@ -1,6 +1,6 @@
 from django import forms
 
-from ..models import Post
+from ..models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
@@ -18,3 +18,20 @@ class PostForm(forms.ModelForm):
         fields = (
             'photo',
         )
+
+    def save(self, **kwargs):
+        # 전달된 키워드인수중 'commit'키 값을 가져옴
+        commit = kwargs.get('commit', True)
+        # 전달된 키워드인수중 'author'키 값을 가져오고 기본 kwargs dict에서 제외
+        author = kwargs.pop('author', None)
+
+        self.instance.author = author
+        instance = super().save(**kwargs)
+
+        comment_string = self.cleaned_data['comment']
+        if commit and comment_string:
+            instance.comment_set.create(
+                author=instance.author,
+                content=comment_string
+            )
+        return instance
