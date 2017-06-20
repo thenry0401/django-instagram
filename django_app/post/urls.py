@@ -22,6 +22,8 @@ urlpatterns = [
 
     url(r'^comment/(?P<comment_pk>\d+)/modify/$', views.comment_modify, name='comment_modify'),
 
+    url(r'^comment/(?P<comment_pk>\d+)/delete/$', views.comment_delete, name='comment_delete'),
+
     # url(r'^.*/$', views.post_anyway, name='post_anyway'),
 ]
 
