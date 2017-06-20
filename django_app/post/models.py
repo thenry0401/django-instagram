@@ -26,7 +26,7 @@ class Post(models.Model):
         related_name='like_posts',
         through='PostLike'
     )
-    tags = models.ManyToManyField('Tag', blank=True)
+
 
     class Meta:
         ordering = ['-pk']
@@ -37,10 +37,7 @@ class Post(models.Model):
             content=content
         )
 
-    def add_tag(self, tag_name):
-        tag, tag_created = Tag.objects.get_or_create(name=tag_name)
-        if not self.tags.filter(name=tag_name).exist():
-            self.tags.add(tag)
+
 
     @property
     def like_count(self):
