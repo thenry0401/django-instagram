@@ -11,6 +11,9 @@ from django.conf import settings
 
 import re
 
+from django.urls import reverse
+
+
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     photo = models.ImageField(upload_to='post', blank=True)
@@ -66,10 +69,8 @@ class Comment(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            super().save(*args, **kwargs)
-        self.make_html_content_and_add_tags()
         super().save(*args, **kwargs)
+        self.make_html_content_and_add_tags()
 
     def make_html_content_and_add_tags(self):
         p = re.compile(r'(#\w+)')
@@ -83,7 +84,11 @@ class Comment(models.Model):
             tag, _ = Tag.objects.get_or_create(name=tag_name.replace('#', ''))
             # 기존 content의 내용을 변경
             change_tag = '<a href="#" class="hash-tag">{}</a>'.format(
-                tag_name
+                # url=reverse('post:hashtag_post_list',
+                #             args={tag_name.replace('#', '')}),
+                url=reverse('post:hashtag_post_list',
+                            args={tag_name.replace('#', '')}),
+                tag_name=tag_name,
             )
             ori_content = re.sub(r'{}(?![<\w])'.format(tag_name), change_tag, ori_content, count=1)
             # content에 포함된 Tag목록을 자신의 tags필드에 추가
@@ -91,6 +96,7 @@ class Comment(models.Model):
                 self.tags.add(tag)
         # 편집이 완료된 문자열을 html_content에 저장
         self.html_content = ori_content
+        super().save(update_fields=['html_content'])
 
 class CommentLike(models.Model):
     comment = models.ForeignKey(Comment)
