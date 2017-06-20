@@ -1,17 +1,10 @@
-from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
-from django.template import loader
-from django.urls import reverse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
-from ..decorators import post_owner
-from ..forms import PostForm, CommentForm
-from ..models import Post
-
-# 자동으로 Django에서 인증에 사용하는 User모델클래스를 리턴
-#   https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#django.contrib.auth.get_user_model
-User = get_user_model()
+from ..forms import CommentForm
+from ..models import Post, Comment
 
 __all__ = (
     'comment_create',
@@ -19,32 +12,47 @@ __all__ = (
     'comment_delete',
 )
 
+
+@require_POST
 @login_required
 def comment_create(request, post_pk):
-    # POST요청을 받아 Comment객체를 생성 후 post_detail페이지로 redirect
-    # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
-
+    # URL에 전달되어온 post_pk로 특정 Post객체 가져옴
     post = get_object_or_404(Post, pk=post_pk)
+    # URL의 GET parameter의 'next'값을 가져옴
+    next = request.GET.get('next')
+    # CommentForm data binding
     form = CommentForm(request.POST)
+
+    # form이 유효할 경우, Comment생성
     if form.is_valid():
-        form.save()
-        return redirect('post:post_detail', post_pk=post.pk)
+        comment = form.save(commit=False)
+        comment.author = request.user
+        comment.post = post
+        comment.save()
+    # form이 유효하지 않을 경우, 현재 request에 error메시지 추가
+    else:
+        result = '<br>'.join(['<br>'.join(v) for v in form.errors.values()])
+        messages.error(request, result)
+    # next값이 존재하면 해당 주소로, 없으면 post_detail로 이동
+    if next:
+        return redirect(next)
+    return redirect('post:post_detail', post_pk=post.pk)
 
 
-@post_owner
-@login_required
-def comment_modify(request, post_pk):
+def comment_modify(request, comment_pk):
     # 수정
     # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
-    pass
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    if request.method == 'POST':
+        pass
+    else:
+        form = CommentForm(instance=comment)
+    context = {
+        'form': form,
+    }
+    return render(request, 'post/comment_modify.html', context)
 
 
-@post_owner
-@login_required
 def comment_delete(request, post_pk, comment_pk):
     # POST요청을 받아 Comment객체를 delete, 이후 post_detail페이지로 redirect
     pass
-
-
-def post_anyway(request):
-    return redirect('post:post_list')

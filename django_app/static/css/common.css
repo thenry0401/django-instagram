@@ -8,6 +8,13 @@
   font-size: 11px;
 }
 
+.btn-xs {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 1px;
+  line-height: 1.6;
+}
+
 .field-wrapper {
   margin-bottom: 10px;
 }
@@ -24,6 +31,11 @@
 }
 
 .field-wrapper input[type=text], .field-wrapper input[type=password] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field-wrapper input[type=file] {
   width: 100%;
   box-sizing: border-box;
 }

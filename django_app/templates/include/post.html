@@ -1,5 +1,5 @@
 {% load static %}
-<article class="post">
+<article id="post-{{ post.pk }}" class="post">
   <header>
     <div class="post-header-left">
       <img src="" alt="">
@@ -35,12 +35,8 @@
       <div class="btn-right">
         {% if user == post.author %}
         <a href="{% url 'post:post_modify' post_pk=post.pk %}" class="btn">수정하기</a>
-        <!--<form action="{% url 'post:post_delete' post_pk=post.pk %}" method="POST" class="form-inline">-->
-          <!--{% csrf_token %}-->
-          <!--<button type="submit" class="btn">삭제하기</button>-->
-         <!--</form>-->
         <a href="{% url 'post:post_delete' post_pk=post.pk %}" class="btn">삭제하기</a>
-       {% endif %}
+        {% endif %}
       </div>
     </div>
     <p class="comment">좋아요 {{ post.like_count }}개</p>
@@ -63,10 +59,9 @@
       {% endfor %}
     </div>
     <p class="created">{{ post.created_date }}</p>
-    <form action="{% url 'post:comment_create' post_pk=post.pk %}" method="POST">
+    <form action="{% url 'post:comment_create' post_pk=post.pk %}?next={{ request.path }}#post-{{ post.pk }}" method="POST">
       {% csrf_token %}
-      <!--<input type="text" placeholder="댓글달기" class="input-comment">-->
-    {{ comment_form.content }}
+      {{ comment_form.content }}
     </form>
   </div>
 </article>
