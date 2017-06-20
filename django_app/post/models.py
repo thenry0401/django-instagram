@@ -9,6 +9,7 @@ from django.db import models
 
 from django.conf import settings
 
+import re
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -54,6 +55,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post)
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     content = models.TextField()
+    html_content = models.TextField(blank=True)
     tags = models.ManyToManyField('Tag')
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -63,6 +65,26 @@ class Comment(models.Model):
         related_name='like_comments',
     )
 
+    def save(self, *args, **kwargs):
+        self.make_html_content_and_add_tags()
+        super().save(*args, **kwargs)
+
+    def make_html_content_and_add_tags(self):
+        p = re.compile(r'(#\w+)')
+        tag_name_list = re.findall(p, self.content)
+        ori_content = self.content
+        for tag_name in tag_name_list:
+            tag, _ = Tag.objects.get_or_create(name=tag_name.replace('#', ''))
+            ori_content = ori_content.replace(
+                tag_name,
+                '<a href="#" class="hash-tag">{}</a>'.format(
+                    tag_name
+                )
+            )
+            if not self.tags.filter(pk=tag.pk).exists():
+                self.tags.add(tag)
+
+        self.html_content = ori_content
 
 class CommentLike(models.Model):
     comment = models.ForeignKey(Comment)
