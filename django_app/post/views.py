@@ -148,12 +148,10 @@ def post_delete(request, post_pk):
         return redirect('post:post_list')
     else:
         # post_delete시에 확인창 띄워주기
-        template = loader.get_template('post/post_delete_check.html')
         context = {
             'post': post,
         }
-        rendered_string = template.render(context=context, request=request)
-        return HttpResponse(rendered_string)
+        return render(request, 'post/post_delete.html', context)
 
 @login_required
 def comment_create(request, post_pk):
