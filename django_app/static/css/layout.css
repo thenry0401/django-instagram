@@ -57,7 +57,11 @@ header.top-header > nav:nth-child(2) {
   text-align: right;
 }
 
-header.top-header > nav:nth-child(2) > div {
+header.top-header > nav:nth-child(2) .post-create {
+  float: left;
+}
+
+header.top-header > nav:nth-child(2) > div.login {
   max-width: 1010px;
   margin: 0 auto;
 }

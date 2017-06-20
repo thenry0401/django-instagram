@@ -3,6 +3,7 @@
 article.post {
   max-width: 600px;
   margin: 0 auto;
+  margin-bottom: 50px;
   border: 1px solid $color-border;
   border-radius: 4px;
   background-color: #fff;
@@ -27,6 +28,9 @@ article.post {
     .post-btn-container {
       .btn-left {
         float: left;
+        img {
+          width: 25px;
+        }
       }
       .btn-right {
         float: right;
@@ -40,13 +44,15 @@ article.post {
       > * {
         display: inline-block;
         vertical-align: middle;
+        margin-top: 6px;
+        margin-bottom: 5px;
       }
       .comment-author {
         font-weight: bold;
         margin-right: 3px;
       }
-      .comment-content {
-
+      p.comment-content {
+        margin: 0;
       }
     }
     p.created {
