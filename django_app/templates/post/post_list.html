@@ -12,4 +12,26 @@
 	{% for post in posts %}
 		{% include 'include/post.html' with type='list'%}
 	{% endfor %}
+
+
+<div class="pagination">
+
+	<div>
+		{% for k, v in request.GET.items %}
+		<div>{{ k }} : {{ v }}</div>
+		{% endfor %}
+	</div>
+
+	{% if posts.has_previous %}
+		<a href="{{ request.path }}?page=1" class="btn">처음</a>
+    <a href="{{ request.path }}?page={{ posts.previous_page_number }}" class="btn">이전({{ posts.previous_page_number }}페이지)</a>
+	{% endif %}
+
+	<a class="btn">현재페이지({{ posts.number }}페이지)</a>
+
+	{% if posts.has_next %}
+		<a href="{{ request.path }}?page={{ posts.next_page_number }}" class="btn">다음({{ posts.next_page_number }}페이지))</a>
+		<a href="{{ request.path }}?page{{ posts.paginator.num_pages }}" class="btn">끝</a>
+	{% endif %}
+</div>
 {% endblock %}

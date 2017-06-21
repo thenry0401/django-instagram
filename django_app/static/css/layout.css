@@ -3,6 +3,17 @@ header.top-header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
 }
 
+header > .post-header-left a.follow {
+  float: right;
+  color: white;
+  font-weight: bold;
+  background-color: #3897f0;
+  border: 1px solid #3897f0;
+  border-radius: 2px;
+  padding: 3px 8px;
+  line-height: 18px;
+}
+
 header.top-header > nav:nth-child(1) {
   max-width: 1010px;
   margin: 0 auto;
@@ -107,4 +118,13 @@ form.form-inline-login input {
 
 .container > .content {
   padding: 10px;
+}
+
+.pagination {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pagination a {
+  font-size: 13px;
 }

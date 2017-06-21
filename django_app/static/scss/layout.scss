@@ -6,6 +6,18 @@ header.top-header {
   background-color: #fff;
   border-bottom: 1px solid $color-border;
 }
+header > .post-header-left{
+  a.follow {
+    float: right;
+    color: white;
+    font-weight: bold;
+    background-color: #3897f0;
+    border: 1px solid #3897f0;
+    border-radius: 2px;
+    padding: 3px 8px;
+    line-height: 18px;
+  }
+}
 header.top-header > nav:nth-child(1) {
   max-width: 1010px;
   margin: 0 auto;
@@ -99,4 +111,12 @@ form.form-inline-login {
 }
 .container > .content {
   padding: 10px;
+}
+.pagination {
+  text-align: center;
+  margin-bottom: 30px;
+
+  a {
+    font-size: 13px;
+  }
 }
