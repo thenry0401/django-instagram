@@ -16,6 +16,10 @@ article.post {
     .post-header-left {
       .header-author {
         font-weight: bold;
+
+        a.follow, a.unfollow {
+          float: right;
+        }
       }
     }
   }

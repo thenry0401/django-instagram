@@ -17,6 +17,10 @@ article.post header .post-header-left .header-author {
   font-weight: bold;
 }
 
+article.post header .post-header-left .header-author a.follow, article.post header .post-header-left .header-author a.unfollow {
+  float: right;
+}
+
 article.post .post-photo-container img {
   width: 100%;
 }
