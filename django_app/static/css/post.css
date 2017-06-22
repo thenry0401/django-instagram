@@ -29,6 +29,10 @@ article.post .post-bottom .post-btn-container .btn-left {
   float: left;
 }
 
+article.post .post-bottom .post-btn-container .btn-left button {
+  border: none;
+}
+
 article.post .post-bottom .post-btn-container .btn-left img {
   width: 25px;
 }

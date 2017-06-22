@@ -28,6 +28,10 @@ article.post {
     .post-btn-container {
       .btn-left {
         float: left;
+
+        button{
+          border: none;
+        }
         img {
           width: 25px;
         }
