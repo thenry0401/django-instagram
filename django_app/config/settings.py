@@ -1,4 +1,43 @@
 """
+<<<<<<< HEAD
+=======
+1. pyenv virtualenv 3.6.1 instagram
+2. pyenv local instagram
+3. pip install django ipython django_extensions
+4. django-admin startproject instagram
+5. mv instagram django_app
+6. pip freeze > requirements.txt
+7. git init
+8. cp <이전 gitignore위치> .
+9. git add -A & git commit -m 'First commit'
+10. Pycharm Interpreter설정
+
+
+모듈 모음
+    회원 관리 모듈 (member/)
+        로그인
+        회원가입
+        팔로우
+        친구찾기
+        친구추천
+        개인페이지
+            내가 올린 글
+            내 정보 관리
+
+    글 관련 모듈 (post/)
+        뉴스피드
+        사진업로드
+        댓글달기
+        좋아요누르기
+        태그달기
+
+
+    알림 관련 모듈 (noti/)
+        팔로워의 글 등록 알림
+        댓글 알림
+
+
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 
 Django settings for instagram project.
 
@@ -9,12 +48,22 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
+<<<<<<< HEAD
+=======
+
+1. TEMPLATE_DIR에 instagram/django_app/templates폴더를 생성 후 해당 경로를 지정
+2. TEMPLATES의 DIRS리스트 설정에 위 변수 삽입
+3. templates디렉토리의 post/post_list.html생성
+4. post_list.html에서 for loop사용해 전달된 posts변수 순환 및 출력
+5. post_list view가 /post/에 접근시 출력되도록 post/urls.py에 설정
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 """
 
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+<<<<<<< HEAD
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
@@ -23,10 +72,20 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+=======
+# django_app/templates
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+# django_app/static
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 STATIC_URL = '/static/'
+<<<<<<< HEAD
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -37,11 +96,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Custom User
+=======
+MEDIA_URL = '/media/'
+# django_app/media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Custom User (default: auth.User)
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 AUTH_USER_MODEL = 'member.User'
 LOGIN_URL = 'member:login'
 
 # Application definition
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,9 +122,13 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'post',
+<<<<<<< HEAD
 
     'member',
 
+=======
+    'member',
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     'utils',
 ]
 
@@ -75,7 +148,11 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+<<<<<<< HEAD
             TEMPLATE_DIR
+=======
+            TEMPLATE_DIR,
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -94,7 +171,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -105,7 +185,10 @@ DATABASES = {
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -124,6 +207,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+<<<<<<< HEAD
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -131,6 +215,14 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
+=======
+# Internationalization
+# https://docs.djangoproject.com/en/1.11/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 
 USE_I18N = True
 
@@ -138,6 +230,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+<<<<<<< HEAD
 
 
 
@@ -146,8 +239,16 @@ USE_TZ = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '=0sfbj8l&m4)9_&zm5$0r0rmsw6h(d*x^^=q+)3hk2h(^coe$0'
+=======
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '*02@a!af_(u@b1jpq@w^px=^mq+r#&&khuzzor60_3&zc^g5#7'
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = []
+=======
+ALLOWED_HOSTS = []
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d

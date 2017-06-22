@@ -1,11 +1,19 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
+<<<<<<< HEAD
 <div>
     <form action="" method="POST">
      	{% csrf_token %}
 		{% include 'include/field_set.html' %}
 		<button type="submit" class="btn">로그인하기</button>
+=======
+<div class="content">
+	<form action="" method="POST">
+		{% csrf_token %}
+		{% include 'include/field_set.html' %}
+		<button type="submit" class="btn">로그인!</button>
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 	</form>
 </div>
 {% endblock %}

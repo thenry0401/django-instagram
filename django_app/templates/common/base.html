@@ -13,7 +13,10 @@
 	<meta name="viewport"
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<<<<<<< HEAD
 	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/instagram.png' %}" />
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
 	<link rel="stylesheet" href="{% static 'css/common.css' %}">
@@ -53,15 +56,25 @@
 				</div>
 			</nav>
 			<nav>
+<<<<<<< HEAD
 				<div class="post-create">
 					<a href="{% url 'post:post_create' %}" class="btn">글쓰기</a>
 				</div>
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 				<!--
 					로그인 되어있으면 <유저명>으로 로그인 중 표시
 					안되어있으면 a태그로 로그인창으로 이동할 수 있는 링크 추가
 				-->
+<<<<<<< HEAD
 				<div class="login">
 					{% if user.is_authenticated %}
+=======
+				<div>
+					{% if user.is_authenticated %}
+					<a href="{% url 'post:post_create' %}" class="btn" style="float:left; margin-top: -7px;">사진올리기</a>
+
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 					<span>{{ user }}로 로그인 중</span>
 					<a href="{% url 'member:logout' %}" class="btn">로그아웃</a>
 					{% else %}
@@ -81,7 +94,11 @@
 				</div>
 			</nav>
 		</header>
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 		<div class="container">
 			{% block content %}
 			{% endblock %}

@@ -6,6 +6,7 @@ header.top-header {
   background-color: #fff;
   border-bottom: 1px solid $color-border;
 }
+<<<<<<< HEAD
 header > .post-header-left{
   a.follow {
     float: right;
@@ -18,10 +19,13 @@ header > .post-header-left{
     line-height: 18px;
   }
 }
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 header.top-header > nav:nth-child(1) {
   max-width: 1010px;
   margin: 0 auto;
   padding: 0 10px;
+<<<<<<< HEAD
 
   height: $header-height;
   // 각 div내의 a요소들은 height와 line-height를
@@ -29,13 +33,26 @@ header.top-header > nav:nth-child(1) {
   // img요소는 vertical-align에 middle속성으로 수직중앙정렬
   .nav-item {
     height: $header-height;
+=======
+  
+  height: $header-height;
+  // 각 div내의 a요소들은 height와 line-height를 
+  // 같은 값으로 가져 수직중앙정렬되도록 함
+  // img요소는 vertical-align에 middle속성으로 수직중앙정렬
+  .nav-item { 
+    height: $header-height; 
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     line-height: $header-height;
   }
   .nav-item > a {
     height: $header-height;
     line-height: $header-height;
     display: inline-block;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     > img {
       vertical-align: middle;
     }
@@ -66,12 +83,17 @@ header.top-header > nav:nth-child(2) {
   border-top: 1px solid $color-border;
   padding: 8px 0;
   text-align: right;
+<<<<<<< HEAD
 
   .post-create {
     float: left;
 
   }
   > div.login {
+=======
+  
+  > div {
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     max-width: 1010px;
     margin: 0 auto;
   }
@@ -79,12 +101,20 @@ header.top-header > nav:nth-child(2) {
 
 form.form-inline-login {
   font-size: 11px;
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
   label {
     margin-right: 5px;
   }
   input {
+<<<<<<< HEAD
     padding: 5px 8px;
+=======
+    padding: 5px 8px;  
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     font-size: 11px;
     margin-right: 6px;
   }
@@ -112,6 +142,7 @@ form.form-inline-login {
 .container > .content {
   padding: 10px;
 }
+<<<<<<< HEAD
 .pagination {
   text-align: center;
   margin-bottom: 30px;
@@ -120,3 +151,5 @@ form.form-inline-login {
     font-size: 13px;
   }
 }
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d

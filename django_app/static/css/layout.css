@@ -3,6 +3,7 @@ header.top-header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
 }
 
+<<<<<<< HEAD
 header > .post-header-left a.follow {
   float: right;
   color: white;
@@ -14,6 +15,8 @@ header > .post-header-left a.follow {
   line-height: 18px;
 }
 
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 header.top-header > nav:nth-child(1) {
   max-width: 1010px;
   margin: 0 auto;
@@ -68,11 +71,15 @@ header.top-header > nav:nth-child(2) {
   text-align: right;
 }
 
+<<<<<<< HEAD
 header.top-header > nav:nth-child(2) .post-create {
   float: left;
 }
 
 header.top-header > nav:nth-child(2) > div.login {
+=======
+header.top-header > nav:nth-child(2) > div {
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
   max-width: 1010px;
   margin: 0 auto;
 }
@@ -119,6 +126,7 @@ form.form-inline-login input {
 .container > .content {
   padding: 10px;
 }
+<<<<<<< HEAD
 
 .pagination {
   text-align: center;
@@ -128,3 +136,5 @@ form.form-inline-login input {
 .pagination a {
   font-size: 13px;
 }
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d

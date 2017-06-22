@@ -1,11 +1,15 @@
 {% load static %}
 {% load custom_tags %}
+<<<<<<< HEAD
 
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 <article id="post-{{ post.pk }}" class="post">
   <header>
     <div class="post-header-left">
       <img src="" alt="">
       <span class="header-author">{{ post.author }}</span>
+<<<<<<< HEAD
       {% if user != post.author %}
         {% if user.follow_ralations %}
         <a href="#" class="follow">팔로우</a>
@@ -15,6 +19,11 @@
       {% endif %}
     </div>
     <div class="post-header-right">
+=======
+    </div>
+    <div class="post-header-right">
+      
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     </div>
   </header>
   <div class="post-photo-container">
@@ -34,7 +43,14 @@
     <div class="post-btn-container clearfix">
       <div class="btn-left">
         <a href="#">
+<<<<<<< HEAD
            <form action="{% url 'post:post_like_toggle' post_pk=post.pk %}" method="POST" class="form-inline">
+=======
+          <!--
+            post:post_like_toggle로 요청하는 form구현
+          -->
+          <form action="{% url 'post:post_like_toggle' post_pk=post.pk %}" method="POST" class="form-inline">
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
             {% csrf_token %}
             <button type="submit" class="btn">
               {% if user in post.like_users.all %}
@@ -44,7 +60,12 @@
               {% endif %}
             </button>
           </form>
+<<<<<<< HEAD
         </a>
+=======
+
+      </a>
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
         <a href="#">
           <img src="{% static 'images/post_comment.png' %}" alt="">
         </a>
@@ -87,6 +108,11 @@
     </div>
     <p class="created">{{ post.created_date }}</p>
     <form action="{% url 'post:comment_create' post_pk=post.pk %}?next={{ request.path }}{{ request.GET|query_string }}#post-{{ post.pk }}" method="POST">
+<<<<<<< HEAD
+=======
+      <!--next주소의 page Get parameter를 수동으로 지정할 때-->
+      <!--<form action="{% url 'post:comment_create' post_pk=post.pk %}?next={{ request.path }}?page={{ request.GET.page }}#post-{{ post.pk }}" method="POST">-->
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
       {% csrf_token %}
       {{ comment_form.content }}
     </form>

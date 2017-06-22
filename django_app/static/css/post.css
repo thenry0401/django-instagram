@@ -1,10 +1,17 @@
 article.post {
   max-width: 600px;
   margin: 0 auto;
+<<<<<<< HEAD
   margin-bottom: 50px;
   border: 1px solid rgba(0, 0, 0, 0.0975);
   border-radius: 4px;
   background-color: #fff;
+=======
+  border: 1px solid rgba(0, 0, 0, 0.0975);
+  border-radius: 4px;
+  background-color: #fff;
+  margin-bottom: 60px;
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 }
 
 article.post header {
@@ -17,8 +24,18 @@ article.post header .post-header-left .header-author {
   font-weight: bold;
 }
 
+<<<<<<< HEAD
 article.post header .post-header-left .header-author a.follow, article.post header .post-header-left .header-author a.unfollow {
   float: right;
+=======
+article.post .post-photo-container {
+  font-size: 0;
+  line-height: 0;
+}
+
+article.post .post-photo-container a {
+  display: block;
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 }
 
 article.post .post-photo-container img {
@@ -33,12 +50,22 @@ article.post .post-bottom .post-btn-container .btn-left {
   float: left;
 }
 
+<<<<<<< HEAD
 article.post .post-bottom .post-btn-container .btn-left button {
   border: none;
 }
 
 article.post .post-bottom .post-btn-container .btn-left img {
   width: 25px;
+=======
+article.post .post-bottom .post-btn-container .btn-left > a {
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+article.post .post-bottom .post-btn-container .btn-left > a img {
+  width: 24px;
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 }
 
 article.post .post-bottom .post-btn-container .btn-right {
@@ -46,14 +73,25 @@ article.post .post-bottom .post-btn-container .btn-right {
 }
 
 article.post .post-bottom p.comment {
+<<<<<<< HEAD
+=======
+  margin-top: 4px;
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
   margin-bottom: 6px;
 }
 
 article.post .post-bottom .post-comment > * {
   display: inline-block;
   vertical-align: middle;
+<<<<<<< HEAD
   margin-top: 6px;
   margin-bottom: 5px;
+=======
+}
+
+article.post .post-bottom .post-comment > p {
+  margin: 0;
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 }
 
 article.post .post-bottom .post-comment .comment-author {
@@ -61,10 +99,13 @@ article.post .post-bottom .post-comment .comment-author {
   margin-right: 3px;
 }
 
+<<<<<<< HEAD
 article.post .post-bottom .post-comment p.comment-content {
   margin: 0;
 }
 
+=======
+>>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 article.post .post-bottom p.created {
   font-size: 11px;
   color: #999;
