@@ -6,7 +6,9 @@
     <div class="post-header-left">
       <img src="" alt="">
       <span class="header-author">{{ post.author }}</span>
-      <a href="#" class="follow">팔로우</a>
+      {% if user != post.author %}
+        <a href="#" class="follow">팔로우</a>
+      {% endif %}
     </div>
     <div class="post-header-right">
     </div>
