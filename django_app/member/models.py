@@ -67,8 +67,13 @@ class User(AbstractUser):
             to_user=user,
         ).delete()
 
-    def is_follow(self,user):
+    def is_follow(self, user):
+        # 해당 user를 내가 follow하고 있는지 bool여부를 반환
+        return self.follow_relations.filter(to_user=user).exists()
 
+    def is_follower(self, user):
+        # 해당 user가 나를 follow하고 있는지 bool여부를 반환
+        return self.follower_relations.filter(from_user=user).exists()
 
     def follow_toggle(self, user):
         # 이미 follow상태면 unfollow로, 아닐경우 follow상태로 만듬
@@ -78,6 +83,16 @@ class User(AbstractUser):
         else:
             return relation
 
+    @property
+    def following(self):
+        relations = self.follow_relations.all()
+        return User.objects.filter(pk__in=relations.values('pk'))
+
+    @property
+    def followers(self):
+        relations = self.follower_relations.all()
+        return User.objects.filter(pk__in=relations.values('pk'))
+
 
 class Relation(models.Model):
     from_user = models.ForeignKey(User, related_name='follow_relations')
@@ -85,7 +100,7 @@ class Relation(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Relation from({}) to ({})'.format (
+        return 'Relation from({}) to ({})'.format(
             self.from_user,
             self.to_user,
         )
