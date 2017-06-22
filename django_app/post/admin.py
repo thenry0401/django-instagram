@@ -1,12 +1,4 @@
 from django.contrib import admin
-<<<<<<< HEAD
-
-from .models import Post
-
-class PostAdmin(admin.ModelAdmin):
-    pass
-
-=======
 from .models import Post
 
 
@@ -16,5 +8,4 @@ class PostAdmin(admin.ModelAdmin):
     pass
 
 
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 admin.site.register(Post, PostAdmin)

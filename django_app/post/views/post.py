@@ -268,7 +268,4 @@ def hashtag_post_list(request, tag_name):
         'posts_count': posts_count,
     }
     return render(request, 'post/hashtag_post_list.html', context)
-<<<<<<< HEAD
-=======
 
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d

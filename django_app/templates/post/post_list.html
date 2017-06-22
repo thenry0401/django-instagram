@@ -1,9 +1,5 @@
 {% extends 'common/base.html' %}
-<<<<<<< HEAD
-
-=======
 <!--utils패키지의 templatetags.custom_tags를 가리킴-->
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 {% load custom_tags %}
 
 {% block content %}
@@ -12,29 +8,6 @@
 		include
 			https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include
 	-->
-<<<<<<< HEAD
-	<!-- <div>
-		<a href="{% url 'post:post_create' %}" class="btn">글쓰기</a>
-	</div> -->
-	{% for post in posts %}
-		{% include 'include/post.html' with type='list'%}
-	{% endfor %}
-
-
-<div class="pagination">
-	{% if posts.has_previous %}
-		<a href="{{ request.path }}?page=1" class="btn">처음</a>
-    <a href="{{ request.path }}?page={{ posts.previous_page_number }}" class="btn">이전({{ posts.previous_page_number }}페이지)</a>
-	{% endif %}
-
-	<a class="btn">현재페이지({{ posts.number }}페이지)</a>
-
-	{% if posts.has_next %}
-		<a href="{{ request.path }}?page={{ posts.next_page_number }}" class="btn">다음({{ posts.next_page_number }}페이지))</a>
-		<a href="{{ request.path }}?page={{ posts.paginator.num_pages }}" class="btn">끝</a>
-	{% endif %}
-</div>
-=======
 
 	<!--custom_tags의 query_string커스텀 필터를 사용-->
 	<div class="test">{{ request.GET|query_string }}</div>
@@ -61,5 +34,4 @@
 	{% endif %}
 
 
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 {% endblock %}

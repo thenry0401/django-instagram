@@ -1,30 +1,5 @@
 {% extends 'common/base.html' %}
 
-<<<<<<< HEAD
-{% block content %}
-<div>
-    <h3>유저: {{ cur_user }}</h3>
-
-    {% if user != cur_user %}
-        {% if cur_user in user.following %}
-        <button type="submit" class="btn">팔로우취소</button>
-        {% else %}
-        <button type="submit" class="btn">팔로우</button>
-        {% endif %}
-    {% endif %}
-
-    <h5>Following</h5>
-    {% for u in cur_user.following %}
-        <div>
-            <a href="{% url 'member:profile' user_pk=u.pk %}" class="btn">{{ u }}</a>
-        </div>
-    {% endfor %}
-
-    <h5>Followers</h5>
-    {% for u in cur_user.followers %}
-        <div>{{ u }}</div>
-    {% endfor %}
-=======
 
 {% block content %}
 <div class="content">
@@ -55,6 +30,5 @@
 		</div>
 	{% endfor %}
 
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 </div>
 {% endblock %}

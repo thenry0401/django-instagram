@@ -3,64 +3,30 @@
 article.post {
   max-width: 600px;
   margin: 0 auto;
-<<<<<<< HEAD
-  margin-bottom: 50px;
-  border: 1px solid $color-border;
-  border-radius: 4px;
-  background-color: #fff;
-
-=======
   border: 1px solid $color-border;
   border-radius: 4px;
   background-color: #fff;
   margin-bottom: 60px;
   
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
   header {
     padding: 15px;
     box-sizing: border-box;
     border-bottom: 1px solid $color-border;
-<<<<<<< HEAD
-
-    .post-header-left {
-      .header-author {
-        font-weight: bold;
-
-        a.follow, a.unfollow {
-          float: right;
-        }
-=======
     
     .post-header-left {
       .header-author {
         font-weight: bold;
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
       }
     }
   }
   .post-photo-container {
-<<<<<<< HEAD
-=======
     font-size: 0;
     line-height: 0;
     a { display: block; }
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     img { width: 100%; }
   }
   .post-bottom {
     padding: 15px;
-<<<<<<< HEAD
-
-    .post-btn-container {
-      .btn-left {
-        float: left;
-
-        button{
-          border: none;
-        }
-        img {
-          width: 25px;
-=======
     
     .post-btn-container {
       .btn-left {
@@ -72,47 +38,31 @@ article.post {
           img {
             width: 24px;
           }
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
         }
       }
       .btn-right {
         float: right;
       }
     }
-<<<<<<< HEAD
-
-    p.comment {
-=======
     
     p.comment {
       margin-top: 4px;
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
       margin-bottom: 6px;
     }
     .post-comment {
       > * {
         display: inline-block;
         vertical-align: middle;
-<<<<<<< HEAD
-        margin-top: 6px;
-        margin-bottom: 5px;
-=======
       }
       > p {
         margin: 0;
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
       }
       .comment-author {
         font-weight: bold;
         margin-right: 3px;
       }
-<<<<<<< HEAD
-      p.comment-content {
-        margin: 0;
-=======
       .comment-content {
         
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
       }
     }
     p.created {

@@ -102,8 +102,4 @@ class Tag(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-<<<<<<< HEAD
         return 'Tag({})'.format(self.name)
-=======
-        return 'Tag({})'.format(self.name)
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d

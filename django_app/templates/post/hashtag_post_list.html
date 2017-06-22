@@ -2,18 +2,6 @@
 
 {% block content %}
 <div class="content">
-<<<<<<< HEAD
-    <h3>{{ tag.name }}</h3>
-    <h5>게시물 총 {{ post_count }}개</h5>
-
-    <ul class="post-list">
-        {% for post in posts %}
-        <li>
-            <img src="{{ post.photo.url }}" alt="" width="33%">
-        </li>
-        {% endfor %}
-    </ul>
-=======
 	<h3>{{ tag.name }}</h3>
 	<h5>게시물 총 {{ posts_count }}개</h5>
 
@@ -24,6 +12,5 @@
 		</li>
 		{% endfor %}
 	</ul>
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
 </div>
 {% endblock %}

@@ -25,8 +25,4 @@ class CommentForm(forms.ModelForm):
             raise ValidationError(
                 '댓글은 최소 3자 이상이어야 합니다'
             )
-<<<<<<< HEAD
         return content
-=======
-        return content
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d

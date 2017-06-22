@@ -48,18 +48,12 @@ def login(request):
         #   Bound form생성
         form = LoginForm(data=request.POST)
         # Bound form의 유효성을 검증
-<<<<<<< HEAD
-        if form.is_valid():
-            user = form.cleaned_data['user']
-            django_login(request, user)
-=======
         #   https://docs.djangoproject.com/en/1.11/topics/forms/#building-a-form-in-django
         if form.is_valid():
             user = form.cleaned_data['user']
             django_login(request, user)
             # 일반적인 경우에는 post_list로 이동하지만,
             # GET parameter의 next속성값이 있을 경우 해당 URL로 이동
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
             next = request.GET.get('next')
             if next:
                 return redirect(next)
@@ -95,14 +89,8 @@ def signup(request):
     #   각각의 경우를 검사해서 틀릴경우 오류메시지 리턴
     #   가입에 성공시 로그인시키고 post_list로 리다이렉트
     if request.method == 'POST':
-<<<<<<< HEAD
-
-        ### Form을 사용하지 않은 경우
-        # # username, password1, password2에 POST로 전달받은 데이터를 할당
-=======
         ### Form을 사용하지 않는 경우
         # username, password1, password2에 POST로 전달받은 데이터를 할당
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
         # username = request.POST['username']
         # password1 = request.POST['password1']
         # password2 = request.POST['password2']
@@ -123,32 +111,8 @@ def signup(request):
         ### Form을 사용한 경우
         form = SignupForm(data=request.POST)
         if form.is_valid():
-<<<<<<< HEAD
-            # username = form.cleaned_data['username']
-            # password1 = form.cleaned_data['password1']
-            # password2 = form.cleaned_data['password2']
-
-            # if User.objects.filter(username=username).exists():
-            #     # 이미 존재하는 username일경우
-            #     return HttpResponse('Username is already exist')
-            # password1과 password2가 같은지 검사
-            # elif password1 != password2:
-            #     # 다를경우
-            #     return HttpResponse('Password and Password check are not equal')
-            # # 위의 두 경우가 아닌 경우 유저를 생성
-            # user = User.objects.create_user(
-            #     username=username,
-            #     password=password1
-            # )
-
-            # 생성한 유저를 로그인 시킴
             user = form.create_user()
             django_login(request, user)
-            # 이후 post_list뷰로 이동
-=======
-            user = form.create_user()
-            django_login(request, user)
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
             return redirect('post:post_list')
     else:
         form = SignupForm()
@@ -157,16 +121,6 @@ def signup(request):
     }
     return render(request, 'member/signup.html', context)
 
-<<<<<<< HEAD
-def profile(request, user_pk=None):
-    # 1. user_pk에 해당하는 User를 cur_user키로 render
-    # 2. memeber/profile.html작성, 해당 user정보 보여주기
-    #   2-1. 해당 user의 followers, following 목록 보여주기
-    # 3. 현재 로그인한 유저가 해당 유저(cur_user)를 팔로우하고 있는지 여부 보여주기
-    #   3-1. 팔로우하고 이다면 '팔로우 해제'버튼, 아니라면 '팔로우'버튼 띄워주기
-    # 4. def follow_toggle(request) 뷰 생성
-
-=======
 
 def profile(request, user_pk=None):
     # 0. urls.py와 연결
@@ -205,7 +159,6 @@ def profile(request, user_pk=None):
             4. block처리시 follow상태는 해제되어야 함 (동시적용 불가)
             4. 로그인 시 post_list에서 block_users의 글은 보이지 않도록 함
     """
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
     if user_pk:
         user = get_object_or_404(User, pk=user_pk)
     else:
@@ -215,41 +168,9 @@ def profile(request, user_pk=None):
     }
     return render(request, 'member/profile.html', context)
 
-<<<<<<< HEAD
-
-"""
-1. GET parameter로 'page'를 받아 처리
-    page가 1일경우 Post의 author가 해당 User인
-    Post목록을 -created_date순서로 page * 9만큼의
-    QuerySet을 생성해서 리턴
-    !!Pagination사용하지 말 것
-    만약 실제 Post개수보다 큰 page가 왔을 경우, 최대한의 값을 보여줌
-    'page'키의 값이 오지 않을 경우, int로 변환 불가능한 경우, 1보다 작은값일 경우 -> 1로 처리
-2. def follow_toggle(request, user_pk)
-    위 함수기반 뷰를 구현
-        login_required
-        requirePOST
-    데코레이터들을 사용(필요하다면 더 추가)
-    처리 후 next값을 받아 처리하고,
-        없을 경우 해당 User의 profile페이지로 이동
-**extra. 유저 차단기능 만들어보기
-    Block여부는 Relation에서 다룸
-        1. followers, following에 유저가 나타나면 안됨
-        2. block_users로 차단한 유저 목록 QuerySet리턴
-        3. follow, unfollow기능을 하기전에 block된 유저인지 확인
-        4. block처리시 follow상태는 해제되어야 함 (동시적용 불가)
-        4. 로그인 시 post_list에서 block_users의 글은 보이지 않도록 함
-"""
-
-
-def follow_toggle(request, user_pk):
-    pass
-
-=======
     # 2. member/profile.html작성, 해당 user정보 보여주기
     #   2-1. 해당 user의 followers, following목록 보여주기
 
     # 3. 현재 로그인한 유저가 해당 유저(cur_user)를 팔로우하고 있는지 여부 보여주기
     #   3-1. 팔로우하고 있다면 '팔로우 해제'버튼, 아니라면 '팔로우'버튼 띄워주기
     # 4~ -> def follow_toggle(request)뷰 생성
->>>>>>> e5278c3fc0369ff8fa911dace01b1d0a28cb1c8d
