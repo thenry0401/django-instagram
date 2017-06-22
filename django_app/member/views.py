@@ -3,7 +3,7 @@ from django.contrib.auth import \
     login as django_login, \
     logout as django_logout, get_user_model
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import LoginForm, SignupForm
 
@@ -137,3 +137,24 @@ def signup(request):
         'form': form,
     }
     return render(request, 'member/signup.html', context)
+
+def profile(request, user_pk=None):
+    # 1. user_pk에 해당하는 User를 cur_user키로 render
+    # 2. memeber/profile.html작성, 해당 user정보 보여주기
+    #   2-1. 해당 user의 followers, following 목록 보여주기
+    # 3. 현재 로그인한 유저가 해당 유저(cur_user)를 팔로우하고 있는지 여부 보여주기
+    #   3-1. 팔로우하고 이다면 '팔로우 해제'버튼, 아니라면 '팔로우'버튼 띄워주기
+    # 4. def follow_toggle(request) 뷰 생성
+
+    if user_pk:
+        user = get_object_or_404(User, pk=user_pk)
+    else:
+        user = request.user
+    context = {
+        'cur_user': user,
+    }
+    return render(request, 'member/profile.html', context)
+
+def follow_toggle(request, user_pk):
+    pass
+
