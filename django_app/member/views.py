@@ -163,6 +163,7 @@ def profile(request, user_pk=None):
             4. block처리시 follow상태는 해제되어야 함 (동시적용 불가)
             4. 로그인 시 post_list에서 block_users의 글은 보이지 않도록 함
     """
+    NUM_POST_PER_PAGE = 3
     page = request.GET.get('page', 1)
     try:
         page = int(page) if int(page) > 1 else 1
@@ -179,10 +180,16 @@ def profile(request, user_pk=None):
     else:
         user = request.user
 
-    posts = Post.objects.filter(author=user).order_by('-created_date')[:page * 9]
+    posts = Post.objects.filter(author=user).order_by('-created_date')[:page * NUM_POST_PER_PAGE]
+    post_count = user.post_set.count()
+    next_page = page + 1 if post_count > page * NUM_POST_PER_PAGE else None
+
     context = {
         'cur_user': user,
-        'posts': posts
+        'posts': posts,
+        'page': page,
+        'post_count': post_count,
+        'next_page': next_page,
     }
     return render(request, 'member/profile.html', context)
 
@@ -196,4 +203,9 @@ def profile(request, user_pk=None):
 @login_required
 @require_POST
 def follow_toggle(request, user_pk):
-    pass
+    next = request.GET.get('next')
+    target_user = get_object_or_404(User, pk=user_pk)
+    request.user.follow_toggle(target_user)
+    if next:
+        return redirect(next)
+    return redirect('member:profile', user_pk=user_pk)
