@@ -30,5 +30,23 @@
 		</div>
 	{% endfor %}
 
+
+	<ul class="profile-photo-list">
+		{% for post in posts %}
+		<li>
+			<a href="{% url 'post:post_detail' post_pk=post.pk %}">
+				<img src="{{ post.photo.url }}" alt="">
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+
+	{% if request.GET.page %}
+	<a href="?page={{ request.Get.page|add:1 }}" class="btn btn-primary btn-block"></a>
+	{% else %}
+	<a href="?page=2" class="btn">더 불러오기</a>
+	{% endif %}
+
+
 </div>
 {% endblock %}

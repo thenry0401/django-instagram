@@ -15,6 +15,16 @@
   line-height: 1.6;
 }
 
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: #3897f0;
+  color: white;
+}
+
 .field-wrapper {
   margin-bottom: 10px;
 }
