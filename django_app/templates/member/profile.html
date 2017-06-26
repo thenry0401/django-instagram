@@ -3,10 +3,13 @@
 
 {% block content %}
 <div class="content">
-	<h3>{{ cur_user }}</h3>
+	<div class="profile-image">
+		<img src="{{ cur_user.img_profile.url }}" alt="" width="150" class="profile-image">
+	</div>
+	<p class="username">{{ cur_user }}</p>
 
+	{% if user.is_authenticated %}
 	{% if user != cur_user %}
-
 		<form action="{% url 'member:follow_toggle' user_pk=cur_user.pk %}" method="POST">
 			{% csrf_token %}
 			{% if cur_user in user.following %}
@@ -15,23 +18,25 @@
 			<button type="submit" class="btn">팔로우</button>
 			{% endif %}
 		</form>
+	{% else %}
+	<a href="{% url 'member:profile_edit' %}" class="btn edit-profile">프로필 수정하기</a>
 	{% endif %}
-
+	{% endif %}
 
 	<h5>Following</h5>
 	{% for u in cur_user.following %}
-		<div>
+		<span>
 			<!--해당 User의 Profile페이지로 갈 수 있는 링크 생성-->
 			<a href="{% url 'member:profile' user_pk=u.pk %}" class="btn">{{ u }}</a>
-		</div>
+		</span>
 	{% endfor %}
 
 	<h5>Followers</h5>
 	{% for u in cur_user.followers %}
-		<div>
+		<span>
 			<!--해당 User의 Profile페이지로 갈 수 있는 링크 생성-->
 			<a href="{% url 'member:profile' user_pk=u.pk %}" class="btn">{{ u }}</a>
-		</div>
+		</span>
 	{% endfor %}
 
 

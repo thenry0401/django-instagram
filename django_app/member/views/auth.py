@@ -1,16 +1,19 @@
+from django.contrib import messages
 from django.contrib.auth import \
-    authenticate, \
     login as django_login, \
-    logout as django_logout, get_user_model
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+    logout as django_logout
+from django.shortcuts import redirect, render
 
-from post.models import Post
-from .forms import LoginForm, SignupForm
+from config import settings
+from ..forms import LoginForm, SignupForm
+import requests
 
-User = get_user_model()
+__all__ = (
+    'login',
+    'logout',
+    'signup',
+    'facebook_login',
+)
 
 
 def login(request):
@@ -125,87 +128,71 @@ def signup(request):
     return render(request, 'member/signup.html', context)
 
 
-def profile(request, user_pk=None):
+def facebook_login(request):
+    # facebook_login view가 처음 호출될 때
+    #   유저가 Facebook login dialog에서 로그인 후, 페이스북에서 우리서비스 (Consumer)쪽으로
+    #   GET parameter를 이용해 'code'값을 전달해줌 (전달받는 주소는 위의 uri_redirect)
+    code = request.GET.get('code')
+    app_access_token = '{}|{}'.format(
+        settings.FACEBOOK_APP_ID,
+        settings.FACEBOOK_SECRET_CODE,
+    )
 
-    # 0. urls.py와 연결
-    #   urls.py참조
-    #
-    # 1. user_pk에 해당하는 User를 cur_user키로 render
-    #   1.1. user = User.objects.filter(조건)
-    #        context = {내용채우기}
-    #        return render(인수 전달)
-    # user = User.objects.get(pk=user_pk)
-    # DoesNotExist Exception발생시 raise Http404
+    def add_message_and_redirect_referer():
+        # 유저용 메세지
+        error_message_for_user = 'Facebook login error'
+        # request에 에러메세지를 전달
+        messages.error(request, error_message_for_user)
+        # 이전페이지로 redirect
+        return redirect(request.META['HTTP_REFERER'])
 
-    """
-    1. GET parameter로 'page'를 받아 처리
-        page가 1일경우 Post의 author가 해당 User인
-        Post목록을 -created_date순서로 page * 9만큼의
-        QuerySet을 생성해서 리턴
-        !!Pagination사용하지 말 것
+    def get_access_token(code):
+        """
+        code를 받아 액세스토큰 교환 URL에 요청, 이후 해당 액세스토큰을 반환
+        오류 발생시 오류메시지 리턴
+        :param code:
+        :return:
+        """
+        # 액세스토큰의 코드를 교환할 URL
+        url_access_token = 'https://graph.facebook.com/v2.9/oauth/access_token'
 
-        만약 실제 Post개수보다 큰 page가 왔을 경우, 최대한의 값을 보여줌
-        'page'키의 값이 오지 않을 경우, int로 변환 불가능한 경우, 1보다 작은값일 경우 -> 1로 처리
+        # 이전에 요청했던 redirect_uri와 같은 값을 만들어 줌 (access_token을 요청할 때 필요함)
+        redirect_uri = '{}://{}{}'.format(
+            request.scheme,
+            request.META['HTTP_HOST'],
+            request.path,
+        )
+        # 액세스토큰의 코드 교환
+        # uri생성을 위한 params
+        url_access_token_params = {
+            'client_id': settings.FACEBOOK_APP_ID,
+            'redirect_uri': redirect_uri,
+            'client_secret': settings.FACEBOOK_SECRET_CODE,
+            'code': code,
+        }
+        # 해당 URL에 get요청 후 결과 (json형식)를 파이썬 object로 변환 (result변수)
+        response = requests.get(url_access_token, params=url_access_token_params)
+        result = response.json()
+        if 'access_token' in result:
+            return result['access_token']
 
-    2. def follow_toggle(request, user_pk)
-        위 함수기반 뷰를 구현
-            login_required
-            requirePOST
-        데코레이터들을 사용(필요하다면 더 추가)
-        처리 후 next값을 받아 처리하고,
-            없을 경우 해당 User의 profile페이지로 이동
+        # 액세스토큰 코드교환 결과에 오류가 있을 경우
+        # 해당 오류를 request에 message로 넘기고 이전페이지 (HTTP_REFERER)로 redirect
+        elif 'error' in result:
+            raise Exception(result['error'])
+            # error_message = 'Facebook login error\n  type: {}\n  message: {}'.format(
+            #     result['error']['type'],
+            #     result['error']['message']
+            # )
+        else:
+            raise Exception('Unknown error')
 
-    **extra. 유저 차단기능 만들어보기
-        Block여부는 Relation에서 다룸
-            1. followers, following에 유저가 나타나면 안됨
-            2. block_users로 차단한 유저 목록 QuerySet리턴
-            3. follow, unfollow기능을 하기전에 block된 유저인지 확인
-            4. block처리시 follow상태는 해제되어야 함 (동시적용 불가)
-            4. 로그인 시 post_list에서 block_users의 글은 보이지 않도록 함
-    """
-    NUM_POST_PER_PAGE = 3
-    page = request.GET.get('page', 1)
+    # code키값이 존재하지 않으면 로그인을 더이상 진행하지 않음
+    if not code:
+        return add_message_and_redirect_referer()
     try:
-        page = int(page) if int(page) > 1 else 1
-    except ValueError:
-        page = 1
+        access_token = get_access_token(code)
     except Exception as e:
-        page = 1
         print(e)
-
-
-
-    if user_pk:
-        user = get_object_or_404(User, pk=user_pk)
-    else:
-        user = request.user
-
-    posts = Post.objects.filter(author=user).order_by('-created_date')[:page * NUM_POST_PER_PAGE]
-    post_count = user.post_set.count()
-    next_page = page + 1 if post_count > page * NUM_POST_PER_PAGE else None
-
-    context = {
-        'cur_user': user,
-        'posts': posts,
-        'page': page,
-        'post_count': post_count,
-        'next_page': next_page,
-    }
-    return render(request, 'member/profile.html', context)
-
-    # 2. member/profile.html작성, 해당 user정보 보여주기
-    #   2-1. 해당 user의 followers, following목록 보여주기
-
-    # 3. 현재 로그인한 유저가 해당 유저(cur_user)를 팔로우하고 있는지 여부 보여주기
-    #   3-1. 팔로우하고 있다면 '팔로우 해제'버튼, 아니라면 '팔로우'버튼 띄워주기
-    # 4~ -> def follow_toggle(request)뷰 생성
-
-@login_required
-@require_POST
-def follow_toggle(request, user_pk):
-    next = request.GET.get('next')
-    target_user = get_object_or_404(User, pk=user_pk)
-    request.user.follow_toggle(target_user)
-    if next:
-        return redirect(next)
-    return redirect('member:profile', user_pk=user_pk)
+        return add_message_and_redirect_referer()
+    # 액세스토큰 검사

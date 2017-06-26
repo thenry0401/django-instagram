@@ -1,3 +1,24 @@
+div.profile-image {
+  width: calc(100%/3 - 20px);
+  padding: 10px;
+}
+
+div.profile-image img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+p.username {
+  font-size: 40px;
+}
+
+a.edit-profile {
+  float: right;
+}
+
 ul.profile-photo-list {
   font-size: 0;
   margin-left: -10px;
