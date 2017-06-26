@@ -1,17 +1,14 @@
-import re
+from pprint import pprint
+
+import requests
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import \
     login as django_login, \
-    logout as django_logout, get_user_model
-from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
+    logout as django_logout
 from django.shortcuts import redirect, render
 
-from config import settings
 from ..forms import LoginForm, SignupForm
-import requests
-
-User=get_user_model()
 
 __all__ = (
     'login',
@@ -244,10 +241,7 @@ def facebook_login(request):
 
         # debug_result에 있는 user_id값을 이용해서 GraphAPI에 유저정보를 요청
         user_info = get_user_info(user_id=debug_result['data']['user_id'], token=access_token)
-        user = User.objects.get_or_create_facebook_user(user_info)
-
-        django_login(user)
-        return redirect(request.META('HTTP_REFERER'))
+        print(user_info)
 
     except GetAccessTokenException as e:
         print(e.code)
