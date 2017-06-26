@@ -18,6 +18,7 @@ class UserManager(DefaultUserManager):
         )
         user, user_created = self.get_or_create(
             username=username,
+            user_type=self.model.USER_TYPE_FACEBOOK,
             defaults={
                 'last_name': user_info['last_name', ''],
                 'first_name': user_info['first_name', ''],
