@@ -8,10 +8,10 @@
     </form>
     <div>
         <ul>
-            {% for item in response.items %}
+            {% for item in videos %}
             <li>
-                <img src="{{ item.snippet.thumbnails.high.url }}" alt="">
-                <a href="https://www.youtube.com/watch?v={{ item.id.videoId }}">{{ item.snippet.title }}</a>
+                <!--<img src="{{ video.thumbnail }}" alt="">-->
+                <a href="https://www.youtube.com/watch?v={{ item.youtube_id }}">{{ item.title }}</a>
             </li>
             {% endfor %}
         </ul>
