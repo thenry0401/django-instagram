@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 
 from post.models import Post, Comment
+from utils import youtube
 from ..models.youtube import Video
 
 __all__ = (
@@ -13,7 +14,7 @@ __all__ = (
 )
 
 
-def youtube_search(request):
+def youtube_search_original(request):
     # [1] 검색결과를 DB에 저장하고, 해당내용을 템플릿에서 보여주기!
     # 1. 유튜브 영상을 저장할 class Video(models.Model)생성
     # 2. 검색결과의 videoId를 Video의 youtube_id필드에 저장
@@ -90,6 +91,27 @@ def youtube_search(request):
         # requests.get을 사용한 결과를 변수에 할당하고
         # 해당 변수를 템플릿에서 표시
         context = {}
+    return render(request, 'post/youtube_search.html', context)
+
+def youtube_search(request, q=None):
+    """
+    유튜브 검색을 라이브러리 형태로 정리
+    """
+    context = dict()
+    q = request.GET.get('q')
+    if q:
+
+        data = youtube.search(q)
+
+        for item in data['items']:
+            Video.objects.create_from_search_result(item)
+        re_pattern = ''.join(['(?=.*{})'.format(item) for item in q.split()])
+        videos = Video.objects.filter(
+            Q(title__iregex=r'{}'.format(re_pattern)) |
+            Q(description__iregex=r'{}'.format(re_pattern))
+        )
+
+        context['videos'] = videos
     return render(request, 'post/youtube_search.html', context)
 
 @require_POST
