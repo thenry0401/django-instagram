@@ -1,12 +1,11 @@
 from django.contrib.auth import get_user_model
-from django.contrib.sites import requests
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import TestCase
 from django.test import TransactionTestCase
 
 from config import settings
 
 User = get_user_model()
+
+
 # Create your tests here.
 
 class UserModelTest(TransactionTestCase):
@@ -14,7 +13,7 @@ class UserModelTest(TransactionTestCase):
     DUMMY_PASSWORD = 'password'
 
     def make_users(self, num):
-        return [User.objects.create_user(username='username{}'.format(i+1)) for i in range(num)]
+        return [User.objects.create_user(username='username{}'.format(i + 1)) for i in range(num)]
 
     def test_fields_default_value(self):
         user = User.objects.create_user(
