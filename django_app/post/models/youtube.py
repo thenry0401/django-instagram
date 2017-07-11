@@ -4,6 +4,7 @@ __all__ = (
     'Video',
 )
 
+
 class VideoManager(models.Manager):
     def create_from_search_result(self, result):
         youtube_id = result['id']['videoId']
@@ -19,6 +20,7 @@ class VideoManager(models.Manager):
             }
         )
         return video
+
 
 class Video(models.Model):
     youtube_id = models.CharField(max_length=50, unique=True)
