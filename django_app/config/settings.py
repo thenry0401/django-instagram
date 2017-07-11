@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     'post',
     'member',
     'utils',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
