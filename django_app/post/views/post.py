@@ -27,6 +27,7 @@ __all__ = (
 )
 
 
+
 def post_list_original(request):
     # 모든 Post목록을 'posts'라는 key로 context에 담아 return render처리
     # post/post_list.html을 template으로 사용하도록 한다

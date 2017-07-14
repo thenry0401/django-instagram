@@ -5,8 +5,13 @@ member application생성
 이후 해당 settings.AUTH_USER_MODEL모델을 Post나 Comment에서 author나 user항목으로 참조
 """
 import re
+
+import time
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_delete
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from utils.fields import CustomImageField
 
@@ -16,7 +21,6 @@ __all__ = (
 )
 
 class Post(models.Model):
-    # Django가 제공하는 기본 settings.AUTH_USER_MODEL와 연결되도록 수정
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     photo = CustomImageField(upload_to='post', blank=True)
     video = models.ForeignKey('Video', blank=True, null=True)
@@ -33,6 +37,7 @@ class Post(models.Model):
         related_name='like_posts',
         through='PostLike',
     )
+    like_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-pk', ]
@@ -42,10 +47,9 @@ class Post(models.Model):
         # content를 content필드내용으로 넣는 Comment객체 생성
         return self.comment_set.create(author=user, content=content)
 
-    @property
-    def like_count(self):
-        # 자신을 like하고 있는 user수 리턴
-        return self.like_users.count()
+    def calc_like_count(self):
+        self.like_count = self.like_users.count()
+        self.save()
 
     @property
     def comment(self):
@@ -62,3 +66,12 @@ class PostLike(models.Model):
         unique_together = (
             ('post', 'user'),
         )
+
+
+@receiver(post_save, sender=PostLike)
+@receiver(post_delete, sender=PostLike)
+def update_post_like_count(sender, instance, **kwargs):
+    print('Signal update_post_like_count, instance: {}'.format(
+        instance
+    ))
+    instance.post.calc_like_count()

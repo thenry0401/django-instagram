@@ -189,3 +189,14 @@ SECRET_KEY = '*02@a!af_(u@b1jpq@w^px=^mq+r#&&khuzzor60_3&zc^g5#7'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'thenry0401@gmail.com'
+EMAIL_HOST_PASSWORD = '비밀번호'
+EMAIL_PORT = 587
+
+# Celery
+CELERY_BROKER_URL = 'redis://localhost:6379/'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
