@@ -1,10 +1,11 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 User = get_user_model()
 
 
-class SignupForm(forms.Form):
+class SignupForm1(forms.Form):
     # SignupForm을 구성하고 해당 form을 view에서 사용하도록 설정
     username = forms.CharField(
         help_text='Signup help text test',
@@ -14,6 +15,10 @@ class SignupForm(forms.Form):
         widget=forms.TextInput,
         help_text='닉네임은 유일해야 합니다',
         max_length=24,
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput,
+        max_length=100
     )
     password1 = forms.CharField(
         widget=forms.PasswordInput
@@ -31,6 +36,14 @@ class SignupForm(forms.Form):
                 'Username already exist'
             )
         return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(eamil=email).exists():
+            raise forms.ValidationError(
+                'Email already exist'
+            )
+        return email
 
     def clean_nickname(self):
         nickname = self.cleaned_data.get('nickname')
@@ -56,10 +69,19 @@ class SignupForm(forms.Form):
         # 자신의 cleaned_data를 사용해서 유저를 생성
         # 생성한 유저를 반환
         username = self.cleaned_data['username']
+        email = self.cleaned_data['email']
         password = self.cleaned_data['password2']
         nickname = self.cleaned_data['nickname']
         return User.objects.create_user(
             username=username,
+            email=email,
             nickname=nickname,
             password=password
         )
+
+
+class SignupForm(UserCreationForm):
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields + ('email', 'nickname',)
